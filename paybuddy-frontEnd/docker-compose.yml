@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  frontend:
+    build:
+      context: ./
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_BACKEND_URL: http://localhost:3000  # The frontend should point to the backend
+    volumes:
+       
+      - ./backend:/paybuddy-frontEnd
+      - /paybuddy-frontEnd/node_modules
+      
+      

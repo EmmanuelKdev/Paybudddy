@@ -1,0 +1,1006 @@
+/* Targeting the scrollbar container */
+::-webkit-scrollbar {
+  width: 8px;  /* Width of the scrollbar */
+}
+
+/* Targeting the scrollbar thumb (the part you can drag) */
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3);  /* Color and transparency of the thumb */
+  border-radius: 4px;  /* Rounded edges for the thumb */
+}
+
+/* Optionally, target the scrollbar track (the area behind the thumb) */
+::-webkit-scrollbar-track {
+  background: transparent;  /* Transparent background */
+}
+
+.appContainer{
+    margin: 0 auto;
+    
+    display:block;
+    
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+.DissplayContainer{
+   
+    color: black;
+    background-color: #1173b4;
+}
+.intro{
+  width: 100%;
+  border-radius: 1rem;
+  margin-left: 1rem;
+}
+.TitleContent{
+  position: absolute;
+  color: white;
+  
+  top: 5rem;
+  right: 29rem;
+  width: 25rem;
+}
+.TitleContent h2{
+  font-size: 3rem;
+  margin: 0;
+}
+.para{
+  text-align: left;
+}
+
+.appContainer p{
+    margin: 0;
+}
+
+.Navbar{
+    background-color: rgb(7, 111, 172,0.2);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    height: 6rem;
+}
+.navbarcontent{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px
+
+}
+.btnB{
+    
+  margin: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+ 
+  border-radius: 4px;
+  border: 0;
+  box-shadow: rgba(1,60,136,.5) 0 -1px 3px 0 inset,rgba(0,44,97,.1) 0 3px 6px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inherit;
+  font-family: "Space Grotesk",-apple-system,system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 24px;
+  margin: 0;
+  margin-right: 10px;
+  height: 5rem;
+  min-width: 50px;
+  padding: 10px;
+  
+  position: relative;
+  text-align: center;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  transition: all .2s cubic-bezier(.22, .61, .36, 1);
+}
+.btnB:hover{
+    background-color: #065dd8;
+    
+}
+.btnB:active {
+    
+    background-color: greenyellow;
+}
+
+.homelabel{
+    margin: 0 auto;
+    margin-top: 3rem;
+    font-family: "Space Grotesk",-apple-system,system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-weight: 700;
+    
+   
+    width: 7rem;
+    text-align: center;
+    cursor: pointer;
+    color: white;
+    
+  
+   padding-top: 2rem;
+   padding-bottom: 2rem;
+    
+    
+}
+.homelabel:hover{
+    border-bottom: 6px solid #f8f8f8;
+    background-color: #149BF3;
+}
+.appSections{
+   
+    color: rgb(0, 0, 0);
+    margin-left: 5rem;
+    margin-right: 5rem;
+    
+}
+.ActivityLogContainer{
+    margin: 0;
+    color: black;
+    background-color: white;
+    border-radius: 1rem;
+    padding: .5rem;
+    text-align: center;
+    
+    
+    
+    max-height: auto;
+    width: 32.5rem;
+    
+    
+    
+}
+.ActivityCon{
+  background-color: #ffffff;
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 1rem;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  padding: .2rem;
+}
+.ActivityCon button{
+  appearance: button;
+  background-color: #1652F0;
+  border: 1px solid #1652F0;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-family: Graphik,-apple-system,system-ui,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 14px;
+  line-height: 1.15;
+  overflow: visible;
+  padding: 12px 16px;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  transition: all 80ms ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: fit-content;
+  margin-bottom: 1rem;
+}
+
+.ActivityCon button:disabled {
+  opacity: .5;
+}
+
+.ActivityCon button:focus {
+  outline: 0;
+}
+
+.ActivityCon button:hover {
+  background-color: #0a6bff;
+  border-color: #0A46E4;
+}
+
+.ActivityCon button:active {
+  background-color: #0039D7;
+  border-color: #0039D7;
+}
+.activebox{
+  text-align: left;
+  padding: .7rem;
+  height: auto;
+  margin: 0 auto;
+  margin: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+  border-radius: .7rem;
+  cursor: pointer;
+}
+.activeMsg{
+  display: flex;
+  justify-content: space-between;
+  height: 3rem;
+  margin-bottom: .5rem;
+}
+.activeMsg li{
+  list-style: none;
+  width: 13rem;
+
+}
+.pointerIcon{
+  width: 1rem;
+  fill: #0a6bff;
+  margin-right: .4rem;
+  height: 1rem;
+  
+}
+.pointerIcon2{
+  width: 1rem;
+  height: 1rem;
+  fill: #0a6bff;
+  margin-right: .4rem;
+  padding: .3rem;
+  
+}
+.pointerIcon2:hover{
+  
+  fill: rgb(170, 14, 14);
+ 
+  width: 1rem;
+  
+}
+.timecalc{
+
+  color: #a1a2a5;
+  
+}
+
+.pendingContainer{
+    color: black;
+    text-align: center;
+    padding: 1rem;
+    
+    max-width: 95%;
+    max-height: auto;
+    width: 32.5rem;
+    background-color: white;
+    border-radius: 1rem;
+    
+}
+.completedTransactions{
+    color: black;
+    text-align: center;
+    padding: 1rem;
+    margin: 0 auto;
+    max-width: 95%;
+    max-height: auto;
+    width: 32.5rem;
+    background-color: white;
+   
+}
+.authForm-container{
+    
+    width: 25rem;
+    height: auto;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    align-items: center;
+    padding: 0.5rem;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 1rem;
+    
+    
+    
+    
+}
+.authForm-container input{
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    border: none;
+    border-bottom: 0.5px solid black;
+    border-radius: 2px;
+    width: 15rem;
+    font-family: "Teachers", sans-serif;
+  }
+label {
+    text-align: left;
+    padding: 0.25rem 0;
+  }
+
+.NewTransActionForm{
+    color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 2rem;
+    padding-right: 2rem;
+   
+    
+    
+   
+}
+
+.AddTransaction{
+    position: fixed;
+    padding: 10px;
+    color: white;
+    width: 50px;
+    background-color: #0a6bff;
+    border: none;
+    border-radius: 50px;
+    margin: 0 auto;
+    z-index: 1000;
+    
+    margin-right: 2rem;
+    right: 35%;
+    top: 80%;
+    
+}
+.createTrans{
+    align-items: center;
+    margin-top: 1rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    margin-bottom: 2rem;
+  appearance: none;
+  background-color: #3EB2FD;
+  background-image: linear-gradient(1deg, #4F58FD, #149BF3 99%);
+  background-size: calc(100% + 20px) calc(100% + 20px);
+  border-radius: 100px;
+  border-width: 0;
+  box-shadow: none;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: CircularStd,sans-serif;
+  font-size: 1rem;
+  height: 3rem;
+  justify-content: center;
+  line-height: 1.5;
+  padding: 6px 20px;
+  
+  text-align: center;
+  text-decoration: none;
+  transition: background-color .2s,background-position .2s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  
+  white-space: nowrap;
+
+}
+.createTrans:active,
+.createTrans:focus{
+    outline: none;
+
+}
+.createTrans:hover {
+    background-position: -20px -20px;
+}
+.createTrans:focus:not(:active) {
+    box-shadow: rgba(40, 170, 255, 0.25) 0 0 0 .125em;
+  }
+.createTransC{
+    align-items: center;
+    margin-top: 0;
+    margin-bottom: 2rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+  appearance: none;
+  background-color: #3EB2FD;
+  background-image: linear-gradient(1deg, #1e7db4, #1173b4 99%);
+  background-size: calc(100% + 20px) calc(100% + 20px);
+  border-radius: 100px;
+  border-width: 0;
+  box-shadow: none;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: CircularStd,sans-serif;
+  font-size: 1rem;
+  height: auto;
+  justify-content: center;
+  line-height: 1.5;
+  padding: 6px 20px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color .2s,background-position .2s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: top;
+  white-space: nowrap;
+
+}
+.createTransC:active,
+.createTrans:focus{
+    outline: none;
+
+}
+.createTransC:hover {
+    background-position: -20px -20px;
+}
+.createTransC:focus:not(:active) {
+    box-shadow: rgba(40, 170, 255, 0.25) 0 0 0 .125em;
+  }
+
+.profileContainer{
+    width: 21rem;
+    font-family: "Teachers", sans-serif;
+    color: black;
+    background-color: #ffffff;
+    margin-left: .7rem;
+    padding: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    border-radius: 1rem;
+
+}
+.analytics{
+  width: 25rem;
+  margin: 0 auto;
+}
+.UpdatesContainer2{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  background-color: #ffffff;
+  border-radius: 1rem;
+   
+  margin: 1rem;
+  padding: 1rem;
+    
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    
+}
+.chartbox{
+ 
+  text-align: center;
+  width: 19rem;
+  height: 20rem;
+  margin-right:.5rem;
+  margin: 0 auto;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
+  border-radius: 2rem;
+}
+
+.NewsImage{
+  width: 100%;
+}
+.Newsbox{
+  width: 100%;
+  padding: .5rem;
+  
+}
+.legend{
+  width: 100%;
+}
+.NewsUpdate{
+  width: 21rem;
+  margin-top: 2rem;
+  padding: .3rem;
+  margin: 0 auto;
+}
+.dataprofile{
+    list-style: none;
+    margin: 0;
+    text-align: left;
+    padding: 0;
+}
+.dataprofile li{
+    margin-bottom: 10px;
+    
+    padding: 10px;
+    height: 2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+.dataprofile li:hover{
+    color: white;
+    background-color: #149BF3;
+
+}
+.Name{
+    font-size: 30px;
+    font-weight: 500;
+}
+.pic{
+    width: 120px;
+}
+.icon{
+    width: 20px;
+    margin-right: 5px;
+}
+.icon2{
+    width: 20px;
+    margin-right: 11px;
+}
+.icon3{
+    width: 2.2rem;
+    fill: white;
+    
+}
+.icon4{
+    width: 1.5rem;
+    
+    fill: white;
+    
+}
+.icon5{
+    width: 1.7rem;
+    
+    
+    fill: white;
+    
+}
+.iconTitlePending{
+    margin: 0;
+}
+.icon6{
+    width: 1.2rem;
+    
+    fill: white;
+    
+}
+.icon7{
+    width: 1.6rem;
+    
+    
+    fill: white;
+    
+    
+}
+.profiletext{
+  margin: 0 auto;
+  margin-top: 20px;
+  
+}
+.iconTitleCompleted{
+    margin: 0;
+}
+.logouttext{
+    
+    margin-top: 0;
+    
+}
+
+.profilebtn{
+        display: block;
+    
+        margin: 3rem;
+        
+        background-color: #0a6bff;
+        border-radius: 4px;
+        border: 0;
+        box-shadow: rgba(1,60,136,.5) 0 -1px 3px 0 inset,rgba(0,44,97,.1) 0 3px 6px 0;
+        box-sizing: border-box;
+        color: #fff;
+        cursor: pointer;
+        display: inherit;
+        font-family: "Space Grotesk",-apple-system,system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 24px;
+        margin: 0;
+        margin-right: 10px;
+        height: 5rem;
+        min-width: 50px;
+        padding: 10px;
+        
+        position: relative;
+        text-align: center;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        
+        transition: all .2s cubic-bezier(.22, .61, .36, 1);
+      }
+      .profilebtn:hover{
+          background-color: #065dd8;
+          
+      }
+      .profilebtn:active {
+          
+          background-color: greenyellow;
+      }
+.mainFormContainer{
+    margin: 0 auto;
+     /* Background color with transparency */
+    background: rgba(255, 255, 255, 0.2);
+     /* Apply blur effect to the background */
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    text-align: center;
+    display: flex;
+    width: 60rem;
+    height: 30rem;
+    padding: 0;
+}
+.innerContainer{
+    margin: auto;
+   
+}
+.carasel{
+    color: black;
+    width: 35rem;
+   
+    margin: auto;
+    padding: 0.3rem;
+}
+.authForm-containerL{
+    
+   
+   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+   color: #000000;
+   background-color: #fff;
+   width: 17rem;
+   padding: 0;
+   margin: 0 auto;
+   margin: 2rem;
+   border-radius: 1rem;
+
+}
+.authForm-containerL input{
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    border: none;
+    border-bottom: 0.5px solid black;
+    border-radius: 2px;
+    width: 15rem;
+    font-family: "Teachers", sans-serif;
+  }
+.loginform{
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    padding: 1rem;
+    border-radius: 1rem;
+    background-color: white;
+    color: #000000;
+
+}
+.logsubmit{
+   
+    margin: auto;
+    width: 7rem;
+    background-color: #137faa;
+  border: 1px solid #1373aa;
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  font-family: "Akzidenz Grotesk BQ Medium", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  outline: none;
+  outline: 0;
+  padding: 10px 25px;
+  text-align: center;
+  transform: translateY(0);
+  transition: transform 150ms, box-shadow 150ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+
+}
+.logsubmit:hover {
+    box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
+    transform: translateY(-2px);
+  }
+
+.regBtn{
+    border: none;
+    background-color: #d4d5d6;
+    color: white;
+    height: 30px;
+    border-radius: 5px;
+    cursor: pointer;
+
+}
+.regBtn:hover{
+    background-color: #a1a1a1;
+
+}
+
+/* src/Loading.css */
+.spinner {
+    width: 40px;
+    height: 40px;
+    position: relative;
+    margin: 100px auto;
+  }
+  
+  .double-bounce1, .double-bounce2 {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #333;
+    opacity: 0.6;
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: bounce 2.0s infinite ease-in-out;
+  }
+  
+  .double-bounce2 {
+    animation-delay: -1.0s;
+  }
+  .notifictionbox{
+    color: #000000;
+  }
+  .ItemBox{
+    margin-top: 1rem;
+    background-color: #fcfcfc;
+    text-align: left;
+    padding: 10px;
+    box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
+  }
+  .itemCoverbox{
+    margin-top: 1rem;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    border-radius: .7rem;
+    padding: .5rem;
+    height: 6rem;
+  }
+  .ItemBox li{
+    list-style: none;
+  }
+  .ItemDisplay{
+    display: flex;
+    justify-content: space-between;
+  }
+  .moreInfo{
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: .8rem;
+    width: 20rem;
+    z-index: 10000;
+    left: 8rem;
+    position: absolute;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  }
+  .amount{
+    margin: 0 auto;
+    margin-top: 1rem;
+    color: white;
+    text-align: center;
+    width: 6rem;
+    
+    
+  }
+  .amount p{
+    
+    background-color: #1e69ff;
+    border-radius: 2rem;
+  }
+  .codenum{
+    color: #bfc0c0;
+  }
+  .CodeID{
+    display: flex;
+    justify-content: space-between;
+    margin-top: .5rem;
+  }
+  .dropdownIcon{
+    width: 0.9rem;
+    margin: 0rem;
+    padding: .5rem;
+    border-radius: 5rem;
+    background-color: #1c67ff;
+    cursor: pointer;
+  }
+  .dropdownIcon:hover{
+
+    background-color: #3d77eb;
+    
+  }
+  .completeTransbtnCon{
+    text-align: center;
+    margin-top: 1rem;
+  }
+  .completeTransbtn{
+    color: white;
+    background-color: #065ca1;
+  border: 0;
+  border-radius: .5rem;
+  box-sizing: border-box;
+  
+  font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: .875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  padding: .75rem 1rem;
+  text-align: center;
+  text-decoration: none #D1D5DB solid;
+  text-decoration-thickness: auto;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+
+
+  }
+  .completeTransbtn:hover{
+    background-color: rgb(5, 43, 82);
+    
+
+  }
+  .completeTransbtn:focus{
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+
+  }
+  .confirmbtn{
+
+    color: white;
+    background-color: #08c777;
+  border: 0;
+  border-radius: .5rem;
+  box-sizing: border-box;
+  
+  font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: .875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  padding: .5rem 1rem;
+  text-align: center;
+  text-decoration: none #D1D5DB solid;
+  text-decoration-thickness: auto;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+
+
+
+  }
+  .confirmbtn:hover{
+    background-color:  #058550;
+
+  }
+  .codeInput{
+    margin-top: 1rem;
+    text-align: center;
+  }
+  .CodeInputbox{
+    margin-right: .7rem;
+    
+    height: 1.5rem;
+    padding-left: .4rem;
+    
+    
+    
+  }
+  
+  @keyframes bounce {
+    0%, 100% {
+      transform: scale(0);
+    }
+    50% {
+      transform: scale(1);
+    }
+  }
+
+@media (max-width: 730px) {
+    .appContainer{
+        background-color: none;
+        height: 100vh;
+        
+      
+
+    }
+    .AddTransaction{
+        right: 1%;
+        top: 80%;
+    }
+
+    .navbarcontent button {
+        padding: 5px;
+        min-width: 50px;
+      }
+      .btnB{
+        margin: 0;
+      }
+    
+    .UpdatesContainer2 {
+        display: none;
+    }
+    .iconTitleCompleted{
+        display: none;
+    }
+    .iconTitlePending{
+        display: none;
+    }
+    .icon6{
+        margin: 0 auto;
+        margin-top: 0.7rem;
+    }
+    .icon5{
+        margin: 0 auto;
+        margin-top: 0.7rem;
+    }
+    .logouttext{
+        display: none;
+    }
+    .icon7{
+        margin: 0 auto;
+        width: 1.5rem;
+        margin-top: 1.5rem;
+    }
+    .profileContainer{
+      margin: 0 auto;
+    }
+    .profilebtn{
+        display: block;
+    
+        margin: 3rem;
+        
+        background-color: #0a6bff;
+        border-radius: 4px;
+        border: 0;
+        box-shadow: rgba(1,60,136,.5) 0 -1px 3px 0 inset,rgba(0,44,97,.1) 0 3px 6px 0;
+        box-sizing: border-box;
+        color: #fff;
+        cursor: pointer;
+        display: inherit;
+        font-family: "Space Grotesk",-apple-system,system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 24px;
+        margin: 0;
+        margin-right: 10px;
+        height: 5rem;
+        min-width: 50px;
+        padding: 10px;
+        
+        position: relative;
+        text-align: center;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        
+        transition: all .2s cubic-bezier(.22, .61, .36, 1);
+      }
+      .profilebtn:hover{
+          background-color: #065dd8;
+          
+      }
+      .profilebtn:active {
+          
+          background-color: greenyellow;
+      }
+      .logsubmit{
+        padding: 10px 30px;
+      }
+      .mainFormContainer{
+        height: 101vh ;
+        width: 100%;
+        
+        
+        margin: 0;
+      }
+      .authForm-containerL{
+        width: 20rem;
+      }
+      .loginform{
+        margin: 0;
+      }
+      
+      .carasel{
+        display: none;
+      }
+      .profiletext{
+        display: none;
+      }
+      .ActivityLogContainer{
+        width: 95%;
+        margin: 0 auto;
+      }
+      
+    
+    
+  }
