@@ -4,14 +4,19 @@ import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { gql, useMutation } from '@apollo/client';
 
 
+const LOGOUT_MUTATION = gql`
+  mutation Logout {
+    logout
+  }
+`;
 
 function Navbar() {
   const {setTrigerr, setLogInState,setGofetch} = useContext(AppContext);
   const navigate = useNavigate();
 
-  let info = null
 
   axios.defaults.withCredentials = true;
 
@@ -30,25 +35,27 @@ function Navbar() {
     
   }
   
+  const [logout] = useMutation(LOGOUT_MUTATION, {
+    onCompleted: () => {
+      setLogInState(false);
+      navigate('/');
+      console.log('Log out complete');
+    },
+    onError: (error) => {
+      console.error('Failed to log out:', error);
+    },
+  });
+  
 
-  const handleButtonClick = async (type: 'pending' | 'complete'| 'home'| 'profile'| 'logOut') => {
-     if (type === 'logOut'){
-      try{
-        const response = await axios.get(window.API_URL+`/logout`);
-        if (response.status === 200) {
-          setLogInState(false);
-          navigate('/')
-          
-          console.log("Log out complete");
-        } else {
-          console.log("Problem with log out request:", response.statusText);
-        }
-
-      } catch{
-        info = 'Failed to Log Out'
+  const handleButtonClick = async (type: 'pending' | 'complete' | 'home' | 'profile' | 'logOut') => {
+    if (type === 'logOut') {
+      try {
+        await logout();
+      } catch (error) {
+        console.error('Failed to log out:', error);
       }
-
-    } 
+    }
+    // Handle other button types...
   };
 
 

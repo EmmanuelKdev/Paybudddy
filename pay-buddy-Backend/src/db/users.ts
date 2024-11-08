@@ -58,14 +58,17 @@ export async function connectuserDb(): Promise<void> {
     const DataModell = mongoose.models[dataCollectionName] || mongoose.model(dataCollectionName, DataSchema);
 
     // Get the current database connection from Mongoose
-    const db = mongoose.connection.db;
+    const dbz = mongoose.connection.db;
+    if (!dbz) {
+      throw new Error('Database not initialized');
+    }
 
     // Check if the 'subscribers' collection exists
-    const collectionsList = await db.listCollections({ name: 'subscribers' }).toArray();
+    const collectionsList = await dbz.listCollections({ name: 'subscribers' }).toArray();
 
     if (collectionsList.length === 0) {
       // Create the 'subscribers' collection if it doesn't exist
-      await db.createCollection('subscribers');
+      await dbz.createCollection('subscribers');
       console.log('Collection "subscribers" created successfully.');
     } else {
       console.log('Collection "subscribers" already exists.');
@@ -144,6 +147,9 @@ export const getUserbyEmail = (email: string) => UserModel.findOne({email});
 export const getUsersSessionToken = (sessionToken: string) => UserModel.findOne({
     'authentication.sessionToken': sessionToken,
 });
+export const getUserByToken = (vToken: string) => UserModel.findOne({
+  'Transaction.items.T_id': vToken ,
+});
 export const getUserbyId = (id: string) => UserModel.findById(id);
 export const createUser = (values: Record<string, any>) => new UserModel(values).save().then((user) => user.toObject());
   
@@ -180,29 +186,62 @@ export const InsertObjectApi = async (data: object) => {
 export const deletObjects = async () => {
     await DataModell.deleteMany({})
 }
-export const countDocs = async () => {
-    const count = await DataModell.countDocuments();
-    return count;
-}
-export async function deleteFav(Tid: string) {
-    try {
-      // Use the $pull operator to remove the item from the array
-      await UserModel.updateOne(
-        { 'userItems.savedItems.T_id': Tid },
-        { $pull: { 'userItems.savedItems': { T_id: Tid } } }
-      );
-      return { success: true, message: 'Item deleted successfully' };
-    } catch (error) {
-      console.error(error);
-      return { success: false, message: 'Failed to delete item' };
+// count the number of transactions documents in the collection
+export const countDocs = async (email: any) => {
+  const user = await UserModel.findOne({email});
+  if (!user) {
+    throw new Error('User not found');
+  }
+  const count = user.Transaction?.items.length;
+  return count;
+};
+
+export async function deleteFav(userid: any, Tid: any) {
+  try {
+    // Use the $pull operator to remove the item from the nested array
+    console.log('User ID:', userid);
+    console.log('Tid:', Tid);
+    const result = await UserModel.updateOne(
+      { _id: userid },
+      { $pull: { 'Transaction.items': { T_id: Tid} } }
+    );
+    console.log('Result:', result);
+
+    if (result.modifiedCount === 0) {
+      return { success: false, message: 'Item not found or already deleted' };
     }
-  };
-  export async function updateStatus(Newstatus: string, Tid: number) {
+
+    return { success: true, message: 'Item deleted successfully' };
+  } catch (error) {
+    console.error(error);
+    return { success: false, message: 'Failed to delete item' };
+  }
+}
+// Get the verification code for a specific transaction
+export async function getVcode(userid: any,tid: any) {
+  try {
+    const user = await UserModel.findById(userid);
+    if (!user) {
+      throw new Error('User not found');
+    }
+    const transaction = user.Transaction?.items.find((item: any) => item.T_id === tid);
+    if (!transaction) {
+      throw new Error('Transaction not found');
+    }
+    return { code: transaction.verificationCode, payerEmail: transaction.Temail };
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+
+}
+  
+export async function updateStatus(Newstatus: string, Tid: any, userId: any) {
     try {
       // Update the status of the specific item with the given Tid in the savedItems array
       const result = await UserModel.updateOne(
-        { 'userItems.savedItems.T_id': Tid },
-        { $set: { 'userItems.savedItems.$.status': Newstatus } }
+        { _id: userId, 'Transaction.items.T_id': Tid },
+        { $set: { 'Transaction.items.$.status': Newstatus } }
       );
   
       if (result.modifiedCount === 0) {
@@ -233,8 +272,8 @@ export async function deleteFav(Tid: string) {
 
   export async function getAllItemsFromRecord(userId: any): Promise<object[] | null> {
     try {
-      const user: any = await UserModel.findById(userId, 'activity.record'); // Retrieve only the activity.record field
-      return user
+      const user: any = await UserModel.findById(userId); // Retrieve only the activity.record field
+      return user.activity.record || [];
     } catch (error) {
       console.error('Error retrieving items from record:', error);
       return null;
@@ -244,8 +283,8 @@ export async function deleteFav(Tid: string) {
     try {
       // Use the $pull operator to remove the item from the activity.record array
       const result = await UserModel.updateOne(
-        { 'activity.record.timestamp': Tid }, // Find the document where activity.record contains the T_id
-        { $pull: { 'activity.record': { timestamp: Tid } } } // Remove the record with the matching T_id
+        { 'activity.record.id': Tid }, // Find the document where activity.record contains the T_id
+        { $pull: { 'activity.record': { id: Tid } } } // Remove the record with the matching T_id
       );
     
       // Check if any documents were modified

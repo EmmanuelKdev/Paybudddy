@@ -1,46 +1,111 @@
-import './ComponentCss.css'
-import { AppContext } from '../App'
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import './ComponentCss.css';
+import { AppContext } from '../App';
 import { useContext, useEffect, useState } from 'react';
-import axios from 'axios';
+import { gql, useQuery, useMutation } from '@apollo/client';
 
+const SEND_VERIFICATION_CODE = gql`
+  mutation SendVerificationCode($tid: String!) {
+    sendverificationCode(tid: $tid)
+  }
+`;
+
+const GET_TEMP_DATA_TWO = gql`
+  query GetTempDataTwo {
+    getTempDataTwo {
+      items {
+        T_id
+        Tname
+        Tpayername
+        Temail
+        Tamount
+        Tdescription
+        status
+        Timedate
+      }
+    }
+  }
+`;
+
+const DELETE_FAV_STATION = gql`
+  mutation DeleteFavStation($tid: String!) {
+    deleteTransactation(tid: $tid)
+  }
+`;
 
 function PendingTransactions() {
-  
-  const { logInState, setTransdata, gofetch, setGofetch , setActivity } = useContext(AppContext);
-  const [pendingTrans, setPendingTrans] = useState<any>([]);
-  const [UserData, setUserData] = useState<any>([]);
-  const [SavedItems, setSavedItems] = useState<any>([]);
-  const [SavedItemsPenFilter, setPendFilter] = useState<any>([]);
-  const [bodyData, setBodyData] = useState<any[]>([]);
-
+  const { logInState, setTransdata, gofetch, setGofetch, setActivity } = useContext(AppContext);
+  const [pendingTrans, setPendingTrans] = useState<any[]>([]);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null); // To manage which dropdown is active
   const [activeDropdownCom, setActiveDropdownCom] = useState<string | null>(null); // To manage which Complete Transaction section is active
-  const [verificationCode, setCode] = useState('');
-  const [statuss, setStatus] = useState('Complete');
 
-  const showMenue = (
-    <svg className='dropdownIcon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-      <path d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" />
-    </svg>
-  );
-  
-  const hideMenue = (
-    <svg className='dropdownIcon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-      <path d="M201.4 137.4c12.5-12.5 32.8-12.5 45.3 0l160 160c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L224 205.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l160-160z" />
-    </svg>
-  );
+  const [shouldFetch, setShouldFetch] = useState(false);
 
-  const handleInputChangeCode = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCode(event.target.value);
+  const [sendVerificationCode] = useMutation(SEND_VERIFICATION_CODE, {
+    onCompleted: () => {
+
+      setActivity("Verification code sent successfully.");
+    },
+    onError: (error) => {
+      console.error("Failed to send verification code:", error);
+      
+    },
+  });
+
+  const handleSubmit = async (tid: any) => {
+    
+    if (tid !== null) {
+      try {
+        await sendVerificationCode({ variables: { tid } });
+      } catch (error) {
+        console.error('Failed to send verification code:', error);
+      }
+    }
   };
 
   useEffect(() => {
-    if (gofetch === 'getting Pending' || logInState) {
-      console.log(gofetch);
-      getData();
+    if (gofetch === 'fetching pending') {
+      setShouldFetch(true);
+    } else {
+      setShouldFetch(false);
     }
-    
   }, [gofetch]);
+
+  // Filter the data to get only pending transactions
+  const filterData = (data: any) => {
+    setPendingTrans(data.filter((item: { status: string }) => item.status === 'Pending'));
+
+  }
+// Query to fetch the data for all transactions
+  useQuery(GET_TEMP_DATA_TWO, {
+    skip: !logInState , // Skip the query if logInState or shouldFetch is false
+    onCompleted: (data) => {
+      const savedItems = data.getTempDataTwo.items;
+      console.log('Pending Transactions:', savedItems);
+      setTransdata(savedItems);
+      filterData(savedItems);
+      setGofetch('');
+    },
+    onError: (error) => {
+      console.error("Error fetching data:", error);
+    },
+  });
+  
+
+  const [deleteFavStation] = useMutation(DELETE_FAV_STATION, {
+    onCompleted: () => {
+      setActivity('Transaction deleted successfully');
+      setGofetch('fetching pending');
+    },
+    onError: (error) => {
+      console.error("Error deleting transaction:", error);
+    },
+  });
+
+
+  const showMenue = 'Show Menu';
+  const hideMenue = 'Hide Menu';
 
   const toggleDisplay = (id: string) => {
     setActiveDropdown(prevId => (prevId === id ? null : id)); // Toggle dropdown visibility
@@ -50,57 +115,13 @@ function PendingTransactions() {
     setActiveDropdownCom(prevId => (prevId === id ? null : id)); // Toggle Complete Transaction visibility
   };
 
-  const getData = async () => {
-    
-    const data = await axios.get(`${window.API_URL}/getTempData2`);
-    console.log(data);
-
-    const userData = data.data;
-    const savedItems = data.data.userItems.savedItems;
-    const bodyData2 = data.data.userItems.savedItems;
-
-    setTransdata(data);
-    setUserData(userData);
-    setSavedItems(savedItems);
-    setBodyData(bodyData2);
-    setGofetch('');
-  };
-
-  useEffect(() => {
-    if (bodyData.length > 0) {
-      const pendingItems = bodyData.filter(item => item.status === 'Pending');
-      setPendingTrans(pendingItems);
-    }
-  }, [bodyData]);
-
-  const handlesubmit = async (Newstatus: any, Tid: any) => {
+  const handleDelete = async (Tid: string) => {
     try {
-      const response = await axios.post(`${window.API_URL}/updatestatus`, { Newstatus, Tid });
-      if (response.status === 200) {
-        setActivity(`Transaction : ${Tid} is now Complete!`)
-        console.log('Update successful');
-        //toast('Transaction Complete')
-        setGofetch('getting Pending');
-      }
+      await deleteFavStation({ variables: { tid: Tid } });
     } catch (error) {
-      console.log('Failed to submit request');
+      console.error('Failed to delete transaction:', error);
     }
   };
-  const handleDelete = async (Tid: any) => {
-    try{
-      const response = await axios.post(`${window.API_URL}/deletFav`, { Tid });
-      if(response.status === 200){
-        setActivity(`You Deleted transaction ${Tid}`)
-        setGofetch('getting Pending');
-        //toast('Transaction Deleted!');
-
-      }
-
-
-    } catch (error) {
-      console.log('Failed to submit request');
-    }
-  }
 
   return (
     <div className='pendingContainer'>
@@ -144,8 +165,8 @@ function PendingTransactions() {
                   </div>
                   {activeDropdownCom === item.Timedate && (
                     <div className='codeInput'>
-                      <input onChange={handleInputChangeCode} className='CodeInputbox' type='number' placeholder='type transaction code here' />
-                      <button onClick={() => handlesubmit(statuss, verificationCode)} className='confirmbtn'>Confirm</button>
+                     
+                      <button onClick={() => handleSubmit(item.T_id)} className='confirmbtn'>Send Code</button>
                     </div>
                   )}
                 </div>
