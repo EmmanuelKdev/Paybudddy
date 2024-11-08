@@ -63,11 +63,11 @@ Paybuddy (Placeholder name) is a business web app designed to help business indi
 
 After installation type:
     ```bash
- npm run dev
+    npm run dev
 
 5. **Front-End**
 
-        ```bash
+    ```bash
         cd paybuddy-frontEnd
         npm install
 
