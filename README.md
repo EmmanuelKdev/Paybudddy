@@ -56,21 +56,25 @@ Paybuddy (Placeholder name) is a business web app designed to help business indi
 
 3. **Go to the terminal and make sure you are the root folder**
 
-**Back-End**
+4. **Back-End**
     ```bash
       cd pay-buddy-Backend
       npm install
 
-After installation type :
-```bash
-npm run dev
+After installation type:
+    ```bash
+ npm run dev
 
-**Front-End**
+5. **Front-End**
 
-```bash
+          ```bash
  cd paybuddy-frontEnd
  npm install
 
+After installation type :
+    ```bash
+npm run dev
 
 
-   Go to http://localhost:5173/  to view the front end
+
+Go to http://localhost:5173/  to view the front end
