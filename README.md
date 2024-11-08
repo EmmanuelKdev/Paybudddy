@@ -67,13 +67,13 @@ After installation type:
 
 5. **Front-End**
 
-          ```bash
- cd paybuddy-frontEnd
- npm install
+        ```bash
+        cd paybuddy-frontEnd
+        npm install
 
 After installation type :
     ```bash
-npm run dev
+    npm run dev
 
 
 
