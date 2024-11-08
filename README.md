@@ -73,7 +73,7 @@ After installation type:
 
 After installation type :
     ```bash
-    npm run dev
+      npm run dev
 
 
 
