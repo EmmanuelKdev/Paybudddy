@@ -10,7 +10,7 @@ function CanvaZero(props: any) {
           <img src={banner} className='intro' alt='intro'/>
           <section>
             <div className='TitleContent'>
-              <h2 data-aos="fade-right">APP ON RAILS</h2>
+              <h2 data-aos="fade-right">PAY-BUDDY</h2>
               <div className='para' data-aos="fade-left">
                 <p> Lorem ipsum dolor sit, amet consectetur adipisicing elit. Asperiores earum velit debitis quo quam odio laudantium pariatur quas
                    ratione repellat nesciunt fuga autem accusantium nisi accusamus ducimus, aspernatur facere reiciendis.</p>

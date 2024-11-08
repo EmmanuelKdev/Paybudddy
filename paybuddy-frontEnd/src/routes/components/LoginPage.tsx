@@ -47,7 +47,7 @@ export const Login = () => {
     <div className="authForm-containerL">
       <form className="loginform" onSubmit={handleSubmit}>
         <div className="heading">
-          <p>Welcome to the App On Rails</p>
+          <p>Welcome to Pay-Buddy</p>
         </div>
         <label htmlFor="email">Email</label>
         <input
