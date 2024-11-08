@@ -38,3 +38,33 @@ Paybuddy (Placeholder name) is a business web app designed to help business indi
 * 🚀 Express Node.js
 * 🔗 GraphQL
 * 🗄️ NoSQL - MongoDB
+
+## How to Run the App 🏃‍♂️
+
+### Prerequisites
+- **Node.js**: Ensure you have Node.js installed. You can download it from [nodejs.org](https://nodejs.org/).
+- **MongoDB**: Ensure you have MongoDB installed and running. You can download it from [mongodb.com](https://www.mongodb.com/).
+
+### Step-by-Step Guide
+
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/EmmanuelKdev/Paybudddy.git
+   cd Paybudddy
+
+2. **Copy example.env contents in the back-end and paste them in a new .env file within the same folder**
+
+3. **Go to the terminal and make sure you are the root folder**
+   Back-End
+     1) cd pay-buddy-Backend
+     2) npm install
+
+     to run the server type: npm run dev
+
+  Front-End
+   1) cd paybuddy-frontEnd
+   2) npm install
+
+   to run the server type: npm run dev
+
+   Go to http://localhost:5173/  to view the front end
