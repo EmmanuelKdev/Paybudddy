@@ -75,4 +75,4 @@ export const typeDefs = gql`
     amountToBePaid: Float!
     description: String!
   }
-`
+` 

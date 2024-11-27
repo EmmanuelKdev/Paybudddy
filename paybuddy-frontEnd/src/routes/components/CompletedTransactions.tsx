@@ -4,6 +4,9 @@ import './ComponentCss.css';
 import { AppContext } from '../App';
 import { useContext, useEffect, useState } from 'react';
 import { gql, useQuery, useMutation } from '@apollo/client';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchData } from '../redux/actions'; // Import the async thunk
+import { AppDispatch, RootState } from '../redux/reduxStore'; // Import the types
 
 
 const GET_TEMP_DATA_TWO = gql`
@@ -31,47 +34,39 @@ const DELETE_FAV_STATION = gql`
 
 function PendingTransactions() {
   const { logInState, setTransdata, gofetch, setGofetch, setActivity } = useContext(AppContext);
-  const [pendingTrans, setPendingTrans] = useState<any[]>([]);
+  const [CompleteTrans, setCompleteTrans] = useState<any[]>([]);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null); // To manage which dropdown is active
  
-  const [shouldFetch, setShouldFetch] = useState(false);
 
 
+
+   // Transaction data transported from redux
+   const data = useSelector((state: RootState) => state.data.data);
+   const dispatch = useDispatch<AppDispatch>();
+   console.log('Data from Redux', data);
+ 
+   const { loading, error, data: fetchedData, refetch } = useQuery(GET_TEMP_DATA_TWO);
+ 
+   useEffect(() => {
+     if (fetchedData) {
+       dispatch(fetchData());
+     }
+   }, [fetchedData, dispatch]);
 
 
   useEffect(() => {
-    if (gofetch === 'fetching pending') {
-      setShouldFetch(true);
-    } else {
-      setShouldFetch(false);
+    if (data) {
+      const completeItems = data.filter((item: { status: string }) => item.status === 'Complete');
+      setCompleteTrans(completeItems);
     }
-  }, [gofetch]);
+  }, [data]);
 
-  // Filter the data to get only pending transactions
-  const filterData = (data: any) => {
-    setPendingTrans(data.filter((item: { status: string }) => item.status === 'Complete'));
-
-  }
-// Query to fetch the data for all transactions
-  useQuery(GET_TEMP_DATA_TWO, {
-    skip: !logInState , // Skip the query if logInState or shouldFetch is false
-    onCompleted: (data) => {
-      const savedItems = data.getTempDataTwo.items;
-      console.log('Pending Transactions:', savedItems);
-      setTransdata(savedItems);
-      filterData(savedItems);
-      setGofetch('');
-    },
-    onError: (error) => {
-      console.error("Error fetching data:", error);
-    },
-  });
   
 
   const [deleteFavStation] = useMutation(DELETE_FAV_STATION, {
     onCompleted: () => {
       setActivity('Transaction deleted successfully');
-      setGofetch('fetching pending');
+      refetch();
     },
     onError: (error) => {
       console.error("Error deleting transaction:", error);
@@ -102,7 +97,7 @@ function PendingTransactions() {
       </div>
       <div className='Itemscontainer'>
         <div className='ItemBox'>
-          {pendingTrans.map((item: any) => (
+          {CompleteTrans.map((item: any) => (
             <div className='itemCoverbox' key={item.Timedate}>
               <div className='ItemDisplay'>
                 <p className='itemName'><svg className='pointerIcon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M64 64C28.7 64 0 92.7 0 128L0 384c0 35.3 28.7 64 64 64l448 0c35.3 0 64-28.7 64-64l0-256c0-35.3-28.7-64-64-64L64 64zm48 160l160 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-160 0c-8.8 0-16-7.2-16-16s7.2-16 16-16zM96 336c0-8.8 7.2-16 16-16l352 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-352 0c-8.8 0-16-7.2-16-16zM376 160l80 0c13.3 0 24 10.7 24 24l0 48c0 13.3-10.7 24-24 24l-80 0c-13.3 0-24-10.7-24-24l0-48c0-13.3 10.7-24 24-24z"/></svg>{item.Tname}</p>

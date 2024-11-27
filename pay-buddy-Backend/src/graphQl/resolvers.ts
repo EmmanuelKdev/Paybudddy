@@ -5,6 +5,7 @@ import { getUserbyEmail, createUser, deleteUserById, getUserbyId, getUsers, getU
 import { setCookie } from "../helpers/cookies";
 import { random, decryption, authentication } from "../helpers/index";
 import nodemailer from 'nodemailer';
+import { Transaction } from "mongodb";
 
 const transporter = nodemailer.createTransport({
   service: 'Gmail',
@@ -49,8 +50,10 @@ const resolvers = {
       if (!user) {
         throw new Error('Invalid session token');
       }
+      
       return user;
     },
+   
    
    
     getTempDataTwo: async (_: any, __: any, { req }: { req: any }) => {

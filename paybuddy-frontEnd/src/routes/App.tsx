@@ -6,7 +6,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import React, { Suspense, lazy } from 'react';
 import { gql, useMutation, useQuery } from '@apollo/client';
-
+import { useDispatch } from 'react-redux';
+import { setData } from './redux/slice';
 
 import './App.css';
 
@@ -52,9 +53,28 @@ const GET_USER_BY_SESSION_TOKEN = gql`
       _id
       name
       email
+      
     }
   }
 `;
+// Fetch transaction datquery
+const GET_TEMP_DATA_TWO = gql`
+  query GetTempDataTwo {
+    getTempDataTwo {
+      items {
+        T_id
+        Tname
+        Tpayername
+        Temail
+        Tamount
+        Tdescription
+        status
+        Timedate
+      }
+    }
+  }
+`;
+
 
 const LOG_ACTIVITY = gql`
   mutation LogActivity($activityWatcher: String!, $currentTimestamp: ID!) {
@@ -76,9 +96,10 @@ function App() {
   const [transactionData, setTransdata] = useState<TransItem[]>([]);
   const [activityWatcher, setActivity] = useState('');
   const [activityTrigger, setTrigerr] = useState(false);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { data, loading: queryLoading, error } = useQuery(GET_USER_BY_SESSION_TOKEN, {
+  const { loading: queryLoading } = useQuery(GET_USER_BY_SESSION_TOKEN, {
     onCompleted: (data) => {
       if (data.getUserBySessionToken) {
         setLogInState(true);
@@ -95,10 +116,36 @@ function App() {
       setLoading(false);
     },
   });
-  console.log('Data:', data, 'Error:', error);
+  //console.log('Data:', data, 'Error:', error);
+
+   // transaction data fetch
+   const {  refetch } = useQuery(GET_TEMP_DATA_TWO, {
+    // Skip the query if both logInState and gofetch are false
+    onCompleted: (data) => {
+      const savedItems = data.getTempDataTwo.items;
+      console.log('Pending Transactions:', savedItems);
+      dispatch(setData(savedItems));
+      setGofetch('');
+    },
+    onError: (error) => {
+      console.error("Error fetching data:", error);
+    },
+  });
+
+  useEffect(() => {
+    if (logInState || gofetch === 'fetch') {
+      setTimeout(()=> {
+        console.log("attempting to fetch transaction data ")
+        refetch();
+
+      }, 1000)
+      
+    }
+  }, [logInState, gofetch, refetch]);
+  
 
   const [logActivity] = useMutation(LOG_ACTIVITY);
-
+// saves user activity to database
   useEffect(() => {
     const logger = async () => {
       const currentTimestamp: number = Date.now();
@@ -108,6 +155,7 @@ function App() {
         });
         if (response.data.addActivity) {
           toast('Activity successfully logged');
+          setGofetch('fetch')
         } else {
           console.log('Post request unsuccessful');
         }
@@ -130,6 +178,7 @@ function App() {
     });
   }, []);
 
+// Switches between login and home page
   useEffect(() => {
     if (!loading) {
       if (logInState === true) {
@@ -143,6 +192,11 @@ function App() {
       }
     }
   }, [logInState, loading, navigate]);
+ 
+ 
+
+
+
 
   if (loading || queryLoading) {
     return <Loading />;

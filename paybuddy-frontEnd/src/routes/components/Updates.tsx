@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useContext, useState, useEffect } from 'react';
+import {  useState, useEffect } from 'react';
 import './ComponentCss.css';
-import { AppContext } from '../App';
+
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
-import { gql, useQuery } from '@apollo/client';
+
 
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // Import Carousel styles
+import { useSelector } from 'react-redux';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -24,51 +25,22 @@ interface TransItem {
   Timedate: string;
 }
 
-interface GetTempDataTwoResult {
-  getTempDataTwo: {
-    
-      items: TransItem[];
-    
-  };
-}
-// GraphQL query to fetch the data for the chart
-const GET_TEMP_DATA_TWO = gql`
-  query GetTempDataTwo {
-    getTempDataTwo {
-     
-        items {
-          T_id
-          Tname
-          Tpayername
-          Temail
-          Tamount
-          Tdescription
-          status
-          Timedate
-        }
-       
-      }
-  }
-`;
+
 
 function Updates() {
-  const { logInState } = useContext(AppContext);
+ 
   const [completCount, setComCount] = useState<number>(0);
   const [pendingCount, setPenCount] = useState<number>(0);
   const [chartData, setData] = useState<TransItem[]>([]);
+  const data = useSelector((state: any) => state.data.data);
 
-  const { data, loading, error } = useQuery<GetTempDataTwoResult>(GET_TEMP_DATA_TWO, {
-    skip: !logInState, // Skip the query if logInState is false
-    onCompleted: (data) => {
-      const items = data.getTempDataTwo.items;
-      console.log('Items:', items);
-      setData(items);
-      
-    },
-    onError: (error) => {
-      console.error("Error fetching chart data:", error);
-    },
-  });
+ useEffect( ()=> {
+  if(!data){
+    console.log("Something wrong with chart data from redux")
+  }
+  setData(data)
+
+ },[data])
 
   useEffect(() => {
     if (chartData && chartData.length > 0) {

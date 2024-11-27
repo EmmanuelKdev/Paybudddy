@@ -3,7 +3,9 @@ import ReactDOM from 'react-dom/client'
 import App from './routes/App'
 import './index.css'
 import { BrowserRouter as Router } from 'react-router-dom'
-import ApolloClientSetup from './ApolloClientSetUp'
+import client from './ApolloClientSetUp';
+import { ApolloProvider } from '@apollo/client';
+import  { ReduxProvider }  from './routes/redux/reduxStore'
 
 window.API_URL="/api/graphql"
 
@@ -12,11 +14,17 @@ window.API_URL="/api/graphql"
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <Router> 
-      <ApolloClientSetup>
-      
-        <App />
+      <ApolloProvider  client={client}>
 
-      </ApolloClientSetup>
+        <ReduxProvider>
+
+          <App />
+
+        </ReduxProvider>
+      
+        
+
+      </ApolloProvider >
        
     </Router>
 

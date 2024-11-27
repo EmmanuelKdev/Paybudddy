@@ -564,6 +564,23 @@ label {
     margin-top: 0;
     
 }
+.dropdown{
+   
+    
+    background-color: #034570;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 1rem;
+    margin-top: 1rem;
+    margin-left: 1rem;
+    padding: 1rem;
+    text-align: left;
+}
+.top{
+  display: flex;
+  justify-content: space-between;
+}
 
 .profilebtn{
         display: block;
@@ -875,6 +892,8 @@ label {
     
     
   }
+
+
   
   @keyframes bounce {
     0%, 100% {

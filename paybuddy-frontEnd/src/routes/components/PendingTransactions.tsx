@@ -3,7 +3,10 @@
 import './ComponentCss.css';
 import { AppContext } from '../App';
 import { useContext, useEffect, useState } from 'react';
-import { gql, useQuery, useMutation } from '@apollo/client';
+import { gql, useMutation, useQuery } from '@apollo/client';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchData } from '../redux/actions'; // Import the async thunk
+import { AppDispatch, RootState } from '../redux/reduxStore'; // Import the types
 
 const SEND_VERIFICATION_CODE = gql`
   mutation SendVerificationCode($tid: String!) {
@@ -11,6 +14,12 @@ const SEND_VERIFICATION_CODE = gql`
   }
 `;
 
+const DELETE_FAV_STATION = gql`
+  mutation DeleteFavStation($tid: String!) {
+    deleteTransactation(tid: $tid)
+  }
+`;
+// Define the GraphQL query
 const GET_TEMP_DATA_TWO = gql`
   query GetTempDataTwo {
     getTempDataTwo {
@@ -28,33 +37,45 @@ const GET_TEMP_DATA_TWO = gql`
   }
 `;
 
-const DELETE_FAV_STATION = gql`
-  mutation DeleteFavStation($tid: String!) {
-    deleteTransactation(tid: $tid)
-  }
-`;
-
 function PendingTransactions() {
-  const { logInState, setTransdata, gofetch, setGofetch, setActivity } = useContext(AppContext);
+  const { gofetch, setGofetch, setActivity } = useContext(AppContext);
   const [pendingTrans, setPendingTrans] = useState<any[]>([]);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null); // To manage which dropdown is active
   const [activeDropdownCom, setActiveDropdownCom] = useState<string | null>(null); // To manage which Complete Transaction section is active
+  
+  // Transaction data transported from redux
+  const data = useSelector((state: RootState) => state.data.data);
+  const dispatch = useDispatch<AppDispatch>();
+  console.log('Data from Redux', data);
 
-  const [shouldFetch, setShouldFetch] = useState(false);
+  const { loading, error, data: fetchedData, refetch } = useQuery(GET_TEMP_DATA_TWO);
+
+  useEffect(() => {
+    if (fetchedData) {
+      dispatch(fetchData());
+    }
+  }, [fetchedData, dispatch]);
 
   const [sendVerificationCode] = useMutation(SEND_VERIFICATION_CODE, {
     onCompleted: () => {
-
       setActivity("Verification code sent successfully.");
     },
     onError: (error) => {
       console.error("Failed to send verification code:", error);
-      
+    },
+  });
+
+  const [deleteFavStation] = useMutation(DELETE_FAV_STATION, {
+    onCompleted: () => {
+      setActivity('Transaction deleted successfully.');
+      refetch(); // Refetch data after deletion
+    },
+    onError: (error) => {
+      console.error("Error deleting transaction:", error);
     },
   });
 
   const handleSubmit = async (tid: any) => {
-    
     if (tid !== null) {
       try {
         await sendVerificationCode({ variables: { tid } });
@@ -64,45 +85,23 @@ function PendingTransactions() {
     }
   };
 
-  useEffect(() => {
-    if (gofetch === 'fetching pending') {
-      setShouldFetch(true);
-    } else {
-      setShouldFetch(false);
+  const handleDelete = async (Tid: string) => {
+    try {
+      await deleteFavStation({ variables: { tid: Tid } });
+      setTimeout(() => {
+        setGofetch('fetch');
+      }, 1000); // Delay of 1000 milliseconds (1 second)
+    } catch (error) {
+      console.error('Failed to delete transaction:', error);
     }
-  }, [gofetch]);
+  };
 
-  // Filter the data to get only pending transactions
-  const filterData = (data: any) => {
-    setPendingTrans(data.filter((item: { status: string }) => item.status === 'Pending'));
-
-  }
-// Query to fetch the data for all transactions
-  useQuery(GET_TEMP_DATA_TWO, {
-    skip: !logInState , // Skip the query if logInState or shouldFetch is false
-    onCompleted: (data) => {
-      const savedItems = data.getTempDataTwo.items;
-      console.log('Pending Transactions:', savedItems);
-      setTransdata(savedItems);
-      filterData(savedItems);
-      setGofetch('');
-    },
-    onError: (error) => {
-      console.error("Error fetching data:", error);
-    },
-  });
-  
-
-  const [deleteFavStation] = useMutation(DELETE_FAV_STATION, {
-    onCompleted: () => {
-      setActivity('Transaction deleted successfully');
-      setGofetch('fetching pending');
-    },
-    onError: (error) => {
-      console.error("Error deleting transaction:", error);
-    },
-  });
-
+  useEffect(() => {
+    if (data) {
+      const pendingItems = data.filter((item: { status: string }) => item.status === 'Pending');
+      setPendingTrans(pendingItems);
+    }
+  }, [data]);
 
   const showMenue = 'Show Menu';
   const hideMenue = 'Hide Menu';
@@ -113,14 +112,6 @@ function PendingTransactions() {
 
   const toggleDisplayCom = (id: string) => {
     setActiveDropdownCom(prevId => (prevId === id ? null : id)); // Toggle Complete Transaction visibility
-  };
-
-  const handleDelete = async (Tid: string) => {
-    try {
-      await deleteFavStation({ variables: { tid: Tid } });
-    } catch (error) {
-      console.error('Failed to delete transaction:', error);
-    }
   };
 
   return (

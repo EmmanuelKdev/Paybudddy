@@ -3,7 +3,7 @@
 import './ComponentCss.css';
 import { AppContext } from '../App';
 import { useContext, useState, useEffect } from 'react';
-import { gql, useMutation, useApolloClient } from '@apollo/client';
+import { gql, useMutation, useApolloClient, useQuery } from '@apollo/client';
 
 const GET_ALL_ACTIVITY = gql`
   query getAllActivity {
@@ -27,14 +27,19 @@ const DELETE_ONE_ACTIVITY = gql`
 `;
 
 function ActivityLog() {
-  const { activityTrigger, setTrigerr, setActivity } = useContext(AppContext);
+  const { activityTrigger, setTrigerr, setActivity, setGofetch } = useContext(AppContext);
   const [activityData, setData] = useState<any[]>([]); // Initialize as an empty array
   const [timeDifference, setTimeDifference] = useState<{ [key: string]: string }>({}); // Use an object to store time differences for each timestamp
   const client = useApolloClient();
 
+  const { loading, error, data: queryData, refetch } = useQuery(GET_ALL_ACTIVITY, {
+    skip: !activityTrigger, // Skip the initial query if activityTrigger is false
+  });
+
   useEffect(() => {
     if (activityTrigger) {
-      client.query({ query: GET_ALL_ACTIVITY })
+      setTimeout(()=> {
+        refetch()
         .then(({ data }) => {
           setData(data.getAllActivity);
           console.log('Activity data fetched:', data.getAllActivity);
@@ -43,13 +48,20 @@ function ActivityLog() {
         .catch((error) => {
           console.error("Error fetching activity data:", error);
         });
+
+      },10)
+     
     }
-  }, [activityTrigger, client, setTrigerr]);
+  }, [activityTrigger, refetch, setTrigerr]);
 
   const [deleteAllActivities] = useMutation(DELETE_ALL_ACTIVITIES, {
     onCompleted: () => {
+      setTimeout(()=> {
+        setTrigerr(true);
+        refetch()
+
+      },1000)
       
-      //setTrigerr(true);
     },
     onError: (error) => {
       console.error("Error deleting all activities:", error);
@@ -58,8 +70,11 @@ function ActivityLog() {
 
   const [deleteOneActivity] = useMutation(DELETE_ONE_ACTIVITY, {
     onCompleted: () => {
-      
-      //setTrigerr(true);
+      setTimeout(()=> {
+        setTrigerr(true);
+        refetch()
+
+      },1000)
     },
     onError: (error) => {
       console.error("Error deleting activity:", error);
@@ -70,7 +85,7 @@ function ActivityLog() {
   const handleDeleteAll = async () => {
     try {
       await deleteAllActivities();
-      setTrigerr(true);
+     
     } catch (error) {
       console.log(`${error} : unable to delete all activity`);
     }
@@ -79,7 +94,7 @@ function ActivityLog() {
   const handleDeleteSingle = async (tid: any) => {
     try {
       await deleteOneActivity({ variables: { tid } });
-      setTrigerr(true);
+      
     } catch (error) {
       console.log(`${error} : unable to delete activity`);
     }
@@ -107,6 +122,10 @@ function ActivityLog() {
     const timeDiff = calcOp(stamp); // Calculate the time difference
     setTimeDifference((prev) => ({ ...prev, [stamp]: timeDiff })); // Update the time difference for the specific timestamp
   };
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
+
 
   return (
     <div className='ActivityLogContainer' data-aos="fade-down">
