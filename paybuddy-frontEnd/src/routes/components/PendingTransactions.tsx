@@ -38,7 +38,7 @@ const GET_TEMP_DATA_TWO = gql`
 `;
 
 function PendingTransactions() {
-  const { gofetch, setGofetch, setActivity } = useContext(AppContext);
+  const { setGofetch, setActivity } = useContext(AppContext);
   const [pendingTrans, setPendingTrans] = useState<any[]>([]);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null); // To manage which dropdown is active
   const [activeDropdownCom, setActiveDropdownCom] = useState<string | null>(null); // To manage which Complete Transaction section is active
@@ -48,7 +48,7 @@ function PendingTransactions() {
   const dispatch = useDispatch<AppDispatch>();
   console.log('Data from Redux', data);
 
-  const { loading, error, data: fetchedData, refetch } = useQuery(GET_TEMP_DATA_TWO);
+  const { data: fetchedData, refetch } = useQuery(GET_TEMP_DATA_TWO);
 
   useEffect(() => {
     if (fetchedData) {
