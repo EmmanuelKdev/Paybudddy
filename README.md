@@ -26,6 +26,8 @@ Paybuddy (Placeholder name) is a business web app designed to help business indi
 ### Future Features 🚀
 * 🧾 Invoicing Features
 * 💳 Online payment handling
+* 🧮 Income calculator
+* 📋 Client record
 
 ## Technology Stack 🛠️
 
