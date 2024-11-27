@@ -33,7 +33,7 @@ const DELETE_FAV_STATION = gql`
 `;
 
 function PendingTransactions() {
-  const { logInState, setTransdata, gofetch, setGofetch, setActivity } = useContext(AppContext);
+  const { setActivity } = useContext(AppContext);
   const [CompleteTrans, setCompleteTrans] = useState<any[]>([]);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null); // To manage which dropdown is active
  

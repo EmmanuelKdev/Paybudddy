@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import './ComponentCss.css';
 
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // Import carousel styles

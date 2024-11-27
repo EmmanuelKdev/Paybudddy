@@ -1,13 +1,11 @@
 import http, { request } from 'http';
 import cors from "cors";
 import express, { Application } from "express";
-import router from './routes'
+
 import compression from "compression"
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import { createApolloServer } from './graphQl/indexQl';
-
-
 
 import cron from 'node-cron'; // Import cron for scheduling tasks
 import { connectuserDb, InsertObjectApi, saveApiData } from './db/users';
@@ -49,17 +47,12 @@ app.use(cookieParser());
 app.use(bodyParser.json())
 
 
-
-
-
-
-
 // initialize userDb
   connectuserDb()
 
 
  // backup from jsonfile
- const Getdata = async () => {
+const Getdata = async () => {
 
   await loadJsonData()
   .then((data) =>  InsertObjectApi(data))  // The extracted data is logged here
@@ -68,20 +61,15 @@ app.use(bodyParser.json())
 }
 //Getdata()
 
+
+// Start the Apollo Server
 createApolloServer(app)
   
-
- 
- 
-
-  // Schedule the `updateNewsData` function to run daily at a specific time (e.g., 2 AM)
+// Schedule the `updateNewsData` function to run daily at a specific time (e.g., 2 AM)
 //cron.schedule('0 2 * * *', () => {
   //console.log('Running daily news update...');
  // updateNewsData();
 //});
-
-
-
 
 // Default port for backend is 3001
 // Server start
@@ -89,7 +77,6 @@ createApolloServer(app)
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT} 3000 `);
 });
-
 
 function graphqlExpress(arg0: (_: any, res: any) => void): import("express-serve-static-core").RequestHandler<{}, any, any, import("qs").ParsedQs, Record<string, any>> {
   throw new Error('Function not implemented.');

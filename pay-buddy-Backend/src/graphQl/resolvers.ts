@@ -1,17 +1,20 @@
 import { getUserByToken, getVcode, UserModel } from "../db/users";
 import { register, login } from "../controllers/authentication";
-import bcrypt from 'bcrypt'
+
 import { getUserbyEmail, createUser, deleteUserById, getUserbyId, getUsers, getUsersSessionToken, getData, deletObjects, countDocs, deleteFav, updateStatus, addItemToRecord, getAllItemsFromRecord, deleteItemFromRecord, deleteAllItemsFromRecord, getUserData } from "../db/users";
 import { setCookie } from "../helpers/cookies";
 import { random, decryption, authentication } from "../helpers/index";
 import nodemailer from 'nodemailer';
 import { Transaction } from "mongodb";
 
+
+const emailpass = process.env.EMAIL_PASSWORD;
+const emailHost = process.env.EMAIL_HOST;
 const transporter = nodemailer.createTransport({
   service: 'Gmail',
   auth: {
-    user: 'snowbytetdev@gmail.com',
-    pass: 'gshf silm cvbf orbb',
+    user: emailHost,
+    pass: emailpass,
   },
   tls: {
     rejectUnauthorized: false,
@@ -19,6 +22,7 @@ const transporter = nodemailer.createTransport({
 });
 
 const resolvers = {
+  // Query resolvers
   Query: {
     getUser: async (_: any, { email }: { email: string }) => {
       return await UserModel.findOne({ email }).select('+authentication.password +authentication.salt +authentication.sessionToken');
@@ -336,10 +340,10 @@ const resolvers = {
 
         if (!user) throw new Error('User not found');
 
-        console.log('User:', user.Transaction?.items);
+        //console.log('User:', user.Transaction?.items);
 
         const ClientData = await getVcode(user._id, token);
-        console.log('ClientData:', ClientData);
+        //console.log('ClientData:', ClientData);
         if(ClientData.code !== tid.toString()) throw new Error('Invalid code');
 
         await updateStatus(status, token, user._id);
