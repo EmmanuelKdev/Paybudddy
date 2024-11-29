@@ -1,9 +1,6 @@
 import { ApolloServer } from "apollo-server-express";
 import { typeDefs } from "./shema";
 import {resolvers} from "./resolvers";
-import { verifySessionToken } from "../helpers/cookies";
-import cookieParser from "cookie-parser";
-import bodyParser from "body-parser";
 import { Request, Response } from "express";
 
 

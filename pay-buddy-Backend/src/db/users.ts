@@ -11,24 +11,70 @@ const databaseName = process.env.USER_DB as string;
 
 
 const UserSchema = new mongoose.Schema({
-    name: {type: String, required: true},
-    email:{type: String, required: true},
-   
-    authentication: {
-        password: {type: String, required: true, select: false},
-        salt:{type: String, select: false},
-        sessionToken: {type: String, select: false},
-    },
-    userItems: {
-        savedItems:[{type:Object}]
-    },
-    Transaction: {
-        items:[{type:Object}]
-    },
-    activity: {
-        record:[{type:Object}]
-    }
-})
+  name: {
+      type: String,
+      required: true,
+      trim: true,
+      minlength: 2,
+      maxlength: 50
+  },
+  email: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      match: [/.+\@.+\..+/, 'Please fill a valid email address']
+  },
+  authentication: {
+      password: {
+          type: String,
+          required: true,
+          select: false,
+          minlength: 8
+      },
+      salt: {
+          type: String,
+          select: false
+      },
+      sessionToken: {
+          type: String,
+          select: false
+      }
+  },
+  userItems: {
+      savedItems: [{
+          type: Object,
+          validate: {
+              validator: function(v: any) {
+                  return Array.isArray(v);
+              },
+              message: (props: { value: any }) => `${props.value} is not a valid array!`
+          }
+      }]
+  },
+  Transaction: {
+      items: [{
+          type: Object,
+          validate: {
+              validator: function(v: any) {
+                  return Array.isArray(v);
+              },
+               message: (props: { value: any }) => `${props.value} is not a valid array!`
+          }
+      }]
+  },
+  activity: {
+      record: [{
+          type: Object,
+          validate: {
+              validator: function(v: any) {
+                  return Array.isArray(v);
+              },
+               message: (props: { value: any }) => `${props.value} is not a valid array!`
+          }
+      }]
+  }
+});
 
 const DataSchema = new mongoose.Schema({
     apiData: {type: Object, required: false}
@@ -116,7 +162,7 @@ async function gracefulShutdown(exitCode: number): Promise<void> {
   }
 }
 
-// Database Operations
+// Database Operation Controllers
 
 //export const saveInToApiData = (values: Record<string, any>) => new DataModell(values).save().then((user) => user.toObject());
 
