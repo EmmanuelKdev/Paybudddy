@@ -3,7 +3,7 @@
 ## 👥 Authors
 
 - Emmanuel Kanda - *Initial work*
-- Duratiom - close to 6 months
+- Duration - close to 6 months
 
 
 ### Project is for Web server programming with an application framework TTC8430-3005
