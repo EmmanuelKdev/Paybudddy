@@ -1,5 +1,13 @@
 # Pay-Buddy Backend 💰
 
+## 👥 Authors
+
+- Emmanuel Kanda - *Initial work*
+- Duratiom - close to 6 months
+
+
+### Project is for Web server programming with an application framework TTC8430-3005
+
 A robust backend service for the Pay-Buddy payment and bussiness processing platform.
 
 ## 🚀 Tech Stack
@@ -23,16 +31,8 @@ A robust backend service for the Pay-Buddy payment and bussiness processing plat
 
 ## 🏗️ Project Structure
 
-pay-buddy-Backend/
-├── src/
-│   ├── controllers/      # Request handlers
-│   ├── db/              # Database models and operations
-│   ├── graphQL/         # GraphQL schemas and resolvers
-│   ├── helpers/         # Utility functions
-│   ├── middleware/      # Express middleware
-│   ├── routes/          # API routes
-│   ├── scripts/         # Utility scripts
-│   └── index.ts         # Application entry point
+![figure 1](/images/structure.PNG)
+
 
 ## 🌟 Features
 
@@ -152,8 +152,5 @@ npm run docker:logs
 
 This project is licensed under the ISC License.
 
-## 👥 Authors
-
-- Emmanuel Kanda - *Initial work*
 
 
