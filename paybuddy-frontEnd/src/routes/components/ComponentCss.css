@@ -652,11 +652,17 @@ label {
    color: #000000;
    background-color: #fff;
    width: 17rem;
-   padding: 0;
+   padding: 1rem;
    margin: 0 auto;
    margin: 2rem;
    border-radius: 1rem;
 
+}
+.error{
+  width: 70%;
+  margin: auto;
+  height: 3rem;
+  font-size: .7rem;
 }
 .authForm-containerL input{
     margin: 0.5rem 0;
@@ -812,6 +818,42 @@ label {
 
     background-color: #3d77eb;
     
+  }
+  .status{
+    background-color: #0340c4;
+    display: flex;
+    justify-content: center;
+    padding: .3rem;
+    width: 6rem;
+    color: white;
+    border-radius: 30px;
+  }
+  .statusComplete{
+    background-color: #03c41d;
+    display: flex;
+    justify-content: center;
+    padding: .3rem;
+    width: 6rem;
+    color: white;
+    border-radius: 30px;
+  }
+  .dropdownItembox{
+    display: flex;
+    background-color:  #1c68ffe1 ;
+    padding: .3rem;
+    border-radius: 30px;
+    width: 6rem;
+    justify-content: center;
+  }
+  .dropdownItembox p{
+    margin-right: .5rem;
+    color: white;
+    font-size: 1rem;
+    
+  }
+  .dIcon{
+    width: 1rem;
+    fill: white;
   }
   .completeTransbtnCon{
     text-align: center;

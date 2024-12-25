@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { gql, useMutation } from "@apollo/client";
 import { AppContext } from "../App";
 
+
 const LOGIN_USER = gql`
   mutation LoginUser($email: String!, $password: String!) {
     login(email: $email, password: $password)
